@@ -15,7 +15,7 @@
     <section>
         <h1>My cool products</h1>
       <div class="list">
-                {% for item in items.values() %}
+             {% for item in items %}
                   <div class="product">
                       <img alt="shoes1" src="{{ url_for('static', filename='images/') }}{{ item.image }}">
                       <div><h2>{{ item.title }}</h2>
