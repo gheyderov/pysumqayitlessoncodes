@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    <title>Home Page</title>
+<title>Home Page</title>
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 {% endblock %}
 
 <body>
@@ -14,20 +14,33 @@
 
     <section>
         <h1>My cool products</h1>
-      <div class="list">
-             {% for item in items %}
-                  <div class="product">
-                      <img alt="shoes1" src="{{ url_for('static', filename='images/') }}{{ item.image }}">
-                      <div><h2>{{ item.title }}</h2>
-                <p class="price">{{ item.price }}<sup>.00</sup></p>
-                <p class="descr">{{ item.description }}</b></p>
-                      <br>
-                      <a href="{{ url_for('productDetail', id = item.id) }}"><p>View Detail</p></a></div>
-                  </div>
-                  {% endfor %}
-      </div>
-      </section>
+        <ul>
+            {% for category in categories %}
+            <a href="{{ url_for('cat', title = category.title) }}">
+                <li>{{ category.title }}</li>
+            </a>
+            {% endfor %}
+        </ul>
+        <div class="list">
+
+            {% for item in items %}
+            <div class="product">
+                <img alt="shoes1" src="{{ url_for('static', filename='images/') }}{{ item.image }}">
+                <div>
+                    <h2>{{ item.title }}</h2>
+                    <p class="price">{{ item.price }}<sup>.00</sup></p>
+                    <p class="descr">{{ item.description }}</b></p>
+                    <br>
+                    <a href="{{ url_for('productDetail', id = item.id) }}">
+                        <p>View Detail</p>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
     {% endblock %}
 
 </body>
+
 </html>

@@ -1,14 +1,56 @@
 from app import app
 from flask import render_template, request
-from models import Product, Contact, ProductReview
-from forms import ContactForm, ReviewForm
+from models import Product, Contact, ProductReview, User, Category
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user
+from forms import (
+    ContactForm, 
+    ReviewForm, 
+    RegisterForm,
+    LoginForm
+    )
 
 
 
 @app.route("/")
 def home():
+    categories = Category.query.all()
     items = Product.query.all()
-    return render_template('index.html', items = items)
+    return render_template('index.html', items = items, categories = categories)
+
+
+@app.route("/category/<string:title>/")
+def cat(title):
+    categories = Category.query.all()
+    items = Category.query.filter_by(title = title).first().products
+    return render_template('index.html', items = items, categories = categories)
+
+
+@app.route("/login/", methods = ['GET', 'POST'])
+def log():
+    form = LoginForm()
+    if request.method == 'POST':
+        user = User.query.filter_by(username = form.username.data).first()
+        if user and check_password_hash(user.password, form.password.data):
+            login_user(user)
+            print('login')
+            return render_template('index.html')
+    return render_template('login.html', form = form)
+
+
+@app.route("/register/", methods = ['GET', 'POST'])
+def reg():
+    form = RegisterForm()
+    if request.method == 'POST':
+        form = RegisterForm(request.form)
+        if form.validate_on_submit():
+            user = User(
+                username = form.username.data,
+                email = form.email.data,
+                password = generate_password_hash(form.password.data)
+            )
+            user.save()
+    return render_template('register.html', form = form)
 
 
 @app.route("/product/<int:id>/", methods = ['GET', 'POST'])
