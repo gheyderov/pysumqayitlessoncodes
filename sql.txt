@@ -1,0 +1,125 @@
+>> 
+>>> from stories.models import *
+>>> 
+>>> Recipe.objects.all()
+<QuerySet [<Recipe: Recipe #1>, <Recipe: Recipe #2>]>
+>>> Recipe.objects.all()
+<QuerySet [<Recipe: Recipe #1>, <Recipe: Recipe #2>]>
+>>> exit()
+(.venv) gunduz@Gunduzs-MacBook-Air django-codes % python3 manage.py shell
+Python 3.9.6 (default, Mar 10 2023, 20:16:38) 
+[Clang 14.0.3 (clang-1403.0.22.14.1)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> 
+>>> 
+>>> from stories.models import Recipe
+>>> Recipe.objects.all()
+<QuerySet [<Recipe: Recipe #2>, <Recipe: Recipe #1>]>
+>>> 
+>>> 
+>>> cat1 = Category(title='Travel')
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'Category' is not defined
+>>> from stories.models import *
+>>> 
+>>> cat1 = Category(title='Travel')
+>>> cat1.save()
+>>> cat1
+<Category: Travel>
+>>> 
+>>> cat1.title
+'Travel'
+>>> cat1.created_at
+datetime.datetime(2023, 7, 3, 15, 46, 52, 170784, tzinfo=datetime.timezone.utc)
+>>> cat1.title='Tour'
+>>> cat1.save()
+>>> cat2 = Category(title='Travel')
+>>> cat2.save()
+>>> cat3 = Category.objects.create(title='Destination')
+>>> tag1 = Tag.objects.create(title='menu')
+>>> tag2 = Tag.objects.create(title='drinks')
+>>> 
+>>> 
+>>> from accounts.models import User
+>>> 
+>>> user1 = User.objects.first()
+>>> 
+>>> user1
+<User: admin>
+>>> user1.id
+1
+>>> user1.username
+'admin'
+>>> 
+>>> recipe3 = Recipe.create(category=cat1, author=user1, title='Recipe #3', small_description='small Description', description="Description", image="image.png",cover_image="image.png")
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Recipe' has no attribute 'create'
+>>> recipe3 = Recipe(category=cat1, author=user1, title='Recipe #3', small_description='small Description', description="Description", image="image.png",cover_image="image.png")
+>>> 
+>>> recipe3.save()
+>>> 
+>>> recipe3.category
+<Category: Tour>
+>>> recipe3.tags
+<django.db.models.fields.related_descriptors.create_forward_many_to_many_manager.<locals>.ManyRelatedManager object at 0x10286a0d0>
+>>> 
+>>> recipe3.tags.all()
+<QuerySet []>
+>>> 
+>>> recipe3.tags.add(tag1, tag2)
+>>> 
+>>> 
+>>> Recipe.objects.get(id=1)
+<Recipe: Recipe #1>
+>>> Recipe.objects.filter(id=1)
+<QuerySet [<Recipe: Recipe #1>]>
+>>> Recipe.objects.filter(id=1).first()
+<Recipe: Recipe #1>
+>>> Recipe.objects.filter(id=1)
+<QuerySet [<Recipe: Recipe #1>]>
+>>> Recipe.objects.get(id=10)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "/Users/gunduz/Desktop/Tech-Academy/pysumqayitlessoncodes/django-codes/.venv/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/gunduz/Desktop/Tech-Academy/pysumqayitlessoncodes/django-codes/.venv/lib/python3.9/site-packages/django/db/models/query.py", line 637, in get
+    raise self.model.DoesNotExist(
+stories.models.Recipe.DoesNotExist: Recipe matching query does not exist.
+>>> Recipe.objects.filter(id=10)
+<QuerySet []>
+>>> 
+>>> 
+>>> Recipe.objects.filter(title__contains='R')
+<QuerySet [<Recipe: Recipe #3>, <Recipe: Recipe #2>, <Recipe: Recipe #1>]>
+>>> Recipe.objects.filter(title__contains='r')
+<QuerySet []>
+>>> Recipe.objects.filter(title__icontains='r')
+<QuerySet [<Recipe: Recipe #3>, <Recipe: Recipe #2>, <Recipe: Recipe #1>]>
+>>> 
+>>> Recipe.objects.filter(category__title__contains='T')
+<QuerySet [<Recipe: Recipe #3>]>
+>>> 
+>>> 
+>>> Recipe.objects.filter(category__title__contains='t')
+<QuerySet [<Recipe: Recipe #2>]>
+>>> 
+>>> Recipe.objects.filter(category__title__contains='s')
+<QuerySet []>
+>>> Recipe.objects.filter(category__title__contains='S')
+<QuerySet [<Recipe: Recipe #2>]>
+>>> 
+>>> 
+>>> Recipe.objects.filter(category__title__contains='S')
+<QuerySet [<Recipe: Recipe #2>]>
+>>> 
+>>> Recipe.objects.filter(category__title__contains='T')
+<QuerySet [<Recipe: Recipe #3>]>
+>>> 
+>>> Recipe.objects.filter(models.Q(category__title__contains='T') | models.Q(category__title__contains='S'))
+<QuerySet [<Recipe: Recipe #3>, <Recipe: Recipe #2>]>
+>>> 
+>>> 
+>>> 
