@@ -4,7 +4,7 @@ from stories.models import Recipe, Category
 # Create your views here.
 
 def recipes(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.all()[:3]
     categories = Category.objects.all()
     context = {
         'recipe_lists' : recipes,
