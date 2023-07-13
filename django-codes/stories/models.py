@@ -25,6 +25,15 @@ class Recipe(AbstractModel):
         ordering = ['-created_at']
 
 
+class RecipeImage(AbstractModel):
+    recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE, verbose_name='images')
+    image = models.ImageField('image', upload_to='recipe_images/')
+
+    def __str__(self) -> str:
+        return self.recipe.title
+    
+
+
 class Category(AbstractModel):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField('title', max_length=100)
