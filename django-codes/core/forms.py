@@ -4,11 +4,6 @@ from core.models import Contact
 
 
 class ContactForm(forms.ModelForm):
-    # name = forms.CharField(max_length=40, widget=forms.TextInput(attrs={
-    #             'class': 'form-control',
-    #             'placeholder': 'your name',
-               
-    #         }))
     class Meta:
         model = Contact
         fields = (

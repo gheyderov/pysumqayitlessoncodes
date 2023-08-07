@@ -1,5 +1,5 @@
 from django.contrib import admin
-from stories.models import Recipe, Category, Tag, RecipeImage
+from stories.models import Recipe, Category, Tag, RecipeImage, Comment
 from django import forms
 
 
@@ -18,6 +18,7 @@ class RecipeAdminForm(forms.ModelForm):
 admin.site.register(Category)
 admin.site.register(Tag)
 admin.site.register(RecipeImage)
+admin.site.register(Comment)
 
 
 class RecipeInline(admin.TabularInline):
