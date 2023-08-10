@@ -1,14 +1,34 @@
 from typing import Any, Dict
+from django.db.models.query import QuerySet
+from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from stories.models import Recipe, Category, Tag
 from django.contrib import messages
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.views.generic.edit import FormMixin
-from stories.forms import CommentForm, SubCommentForm
+from stories.forms import CommentForm, SubCommentForm, RecipeCreateForm
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
+
+class RecipeCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'create_story.html'
+    form_class = RecipeCreateForm
+    # success_url = reverse_lazy('recipes')
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+
+class RecipeUpdateView(UpdateView):
+    template_name = 'create_story.html'
+    form_class = RecipeCreateForm
+    model = Recipe
+
 
 def recipes(request):
     print('Liked posts: ', request.session.get('liked_posts'))
@@ -28,6 +48,19 @@ class RecipeListView(ListView):
     ordering = ['-created_at']
     paginate_by = 1
     # recipe_list
+    # Recipe.objects.all
+
+    def get_queryset(self) -> QuerySet[Any]:
+        cat_id = self.request.GET.get('category')
+        tag_id = self.request.GET.get('tag')
+        queryset = super().get_queryset()
+        if cat_id:
+            queryset = queryset.filter(category__id = cat_id)
+        if tag_id:
+            queryset = queryset.filter(tags__id = tag_id)
+        if cat_id and tag_id:
+            queryset = queryset.filter(category__id = cat_id, tags__id = tag_id)
+        return queryset
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
