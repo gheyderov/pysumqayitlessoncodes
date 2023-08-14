@@ -14,7 +14,7 @@ urlpatterns = [
     path('recipe-create/', RecipeCreateView.as_view(), name='recipe_create'),
     path('recipe-update/<int:pk>/', RecipeUpdateView.as_view(), name='recipe_update'),
     path('like_post/<int:pk>/', like_post, name='like_post'),
-    path('recipe/<int:pk>/', RecipeDetailView.as_view(), name='recipe_detail'),
+    path('recipe/<str:slug>/', RecipeDetailView.as_view(), name='recipe_detail'),
 
 
 

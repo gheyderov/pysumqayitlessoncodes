@@ -35,6 +35,7 @@ class RecipeAdmin(admin.ModelAdmin):
     search_fields = ['title', 'category__title']
     inlines = [RecipeInline]
     form = RecipeAdminForm
+    readonly_fields = ['slug']
 
     def get_tags(self, obj):
         arr = []
