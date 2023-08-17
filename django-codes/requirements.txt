@@ -6,10 +6,13 @@ cryptography==41.0.2
 defusedxml==0.7.1
 Django==4.2.2
 django-jazzmin==2.6.0
+django-modeltranslation==0.18.11
+django-rosetta==0.9.9
 Faker==19.3.0
 idna==3.4
 oauthlib==3.2.2
 Pillow==9.5.0
+polib==1.2.0
 psycopg2-binary==2.9.6
 pycparser==2.21
 PyJWT==2.8.0

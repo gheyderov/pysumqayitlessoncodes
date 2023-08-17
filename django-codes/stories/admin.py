@@ -1,6 +1,7 @@
 from django.contrib import admin
 from stories.models import Recipe, Category, Tag, RecipeImage, Comment
 from django import forms
+from modeltranslation.admin import TranslationAdmin
 
 
 # Register your models here.
@@ -15,10 +16,15 @@ class RecipeAdminForm(forms.ModelForm):
         }
 
 
-admin.site.register(Category)
+
 admin.site.register(Tag)
 admin.site.register(RecipeImage)
 admin.site.register(Comment)
+
+class CategoryAdmin(TranslationAdmin):
+    list_display = ['title']
+
+admin.site.register(Category, CategoryAdmin)
 
 
 class RecipeInline(admin.TabularInline):
@@ -27,7 +33,7 @@ class RecipeInline(admin.TabularInline):
 
 
 @admin.register(Recipe)
-class RecipeAdmin(admin.ModelAdmin):
+class RecipeAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'category', 'author', 'get_tags']
     list_display_links = ['id', 'title']
     list_editable = ['category']
