@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'accounts',
     'social_django',
     'rosetta',
+    'rest_framework',
 ]
 
 AUTHENTICATION_BACKENDS = [

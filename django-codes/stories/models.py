@@ -26,6 +26,9 @@ class Recipe(AbstractModel):
     def get_absolute_url(self):
         return reverse_lazy('recipe_detail', kwargs = {'slug': self.slug})
     
+    def author_name(self):
+        return self.author.get_full_name()
+    
     # class Meta:
     #     ordering = ['-created_at']
 
