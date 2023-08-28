@@ -21,8 +21,26 @@ class TagSerializer(serializers.ModelSerializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     # category = serializers.CharField(source = 'category.title')
-    # category = CategorySerializer()
-    # tags = TagSerializer(many = True)
+    category = CategorySerializer()
+    tags = TagSerializer(many = True)
+    class Meta:
+        model = Recipe
+        fields = (
+            'id',
+            'category',
+            'tags',
+            'author_name',
+            'title',
+            'slug',
+            'small_description',
+            'description',
+            'image',
+            'cover_image'
+        )
+
+
+class RecipeCreateSerializer(serializers.ModelSerializer):
+    slug = serializers.SlugField(read_only=True)
     class Meta:
         model = Recipe
         fields = (
