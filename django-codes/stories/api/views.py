@@ -8,6 +8,7 @@ from stories.api.serializers import (
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 def categories(request):
@@ -64,6 +65,7 @@ def categories(request):
 class RecipeAPIView(ListCreateAPIView):
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -76,13 +78,13 @@ class RecipeRetrieveUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Recipe.objects.all()
 
 
-class RecipeViewSet(viewsets.ModelViewSet):
-    queryset = Recipe.objects.all()
-    serializers = {
-        'default' : RecipeSerializer,
-        'create': RecipeCreateSerializer,
-        'update': RecipeCreateSerializer
-    }
+# class RecipeViewSet(viewsets.ModelViewSet):
+#     queryset = Recipe.objects.all()
+#     serializers = {
+#         'default' : RecipeSerializer,
+#         'create': RecipeCreateSerializer,
+#         'update': RecipeCreateSerializer
+#     }
 
-    def get_serializer_class(self):
-        return self.serializers.get(self.action, self.serializers['default'])
+#     def get_serializer_class(self):
+#         return self.serializers.get(self.action, self.serializers['default'])

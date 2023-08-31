@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+from django.contrib.messages import constants as messages
 import os
 from pathlib import Path
 
@@ -45,12 +46,31 @@ INSTALLED_APPS = [
     'social_django',
     'rosetta',
     'rest_framework',
+    'rest_framework_simplejwt',
 ]
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "TOKEN_OBTAIN_SERIALIZER": "accounts.api.serializers.UserTokenObtainSerializer",
+
+}
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
@@ -109,14 +129,13 @@ DATABASES = {
     }
 }
 
-from django.contrib.messages import constants as messages
 
 MESSAGE_TAGS = {
-        messages.DEBUG: 'alert-secondary',
-        messages.INFO: 'alert-info',
-        messages.SUCCESS: 'alert-success',
-        messages.WARNING: 'alert-warning',
-        messages.ERROR: 'alert-danger',
+    messages.DEBUG: 'alert-secondary',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
 }
 
 
@@ -169,8 +188,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, "static")
-    ]
+    os.path.join(BASE_DIR, "static")
+]
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
