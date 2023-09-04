@@ -63,6 +63,9 @@ def categories(request):
 
 
 class RecipeAPIView(ListCreateAPIView):
+    '''
+        Recipes List Create
+    '''
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly,)

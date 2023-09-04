@@ -14,6 +14,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'last_name'
         )
 
+
+class UserTokenProfileSerializer(serializers.ModelSerializer):
+    refresh = serializers.CharField()
+    access = serializers.CharField()
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'refresh',
+            'access'
+        )
+
     
 class UserTokenObtainSerializer(TokenObtainPairSerializer):
 
