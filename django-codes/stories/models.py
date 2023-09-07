@@ -29,8 +29,8 @@ class Recipe(AbstractModel):
     def author_name(self):
         return self.author.get_full_name()
     
-    # class Meta:
-    #     ordering = ['-created_at']
+    class Meta:
+        ordering = ['-created_at']
 
 
 class RecipeImage(AbstractModel):

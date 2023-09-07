@@ -7,4 +7,4 @@ from accounts.api.serializers import UserTokenProfileSerializer
 class UserTokenObtainPairView(TokenObtainPairView):
     @swagger_auto_schema(responses={200: UserTokenProfileSerializer(many=True)})
     def post(self, request, *args, **kwargs):
-        return super().post(*args, **kwargs)
+        return super().post(request, *args, **kwargs)

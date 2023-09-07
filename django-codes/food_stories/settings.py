@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_yasg',
     'drf_spectacular',
+    'corsheaders',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -93,6 +94,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET = 'e932256b243b7d27104a90862186a2b2'  # App Secret
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -103,6 +105,8 @@ MIDDLEWARE = [
     'food_stories.middleware.BlockUsersIpsMiddleware',
 
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'food_stories.urls'
 

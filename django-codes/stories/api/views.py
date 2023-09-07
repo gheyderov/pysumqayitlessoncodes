@@ -1,13 +1,14 @@
-from stories.models import Category, Recipe
+from stories.models import Category, Recipe, Tag
 from django.http import JsonResponse
 from stories.api.serializers import (
     CategorySerializer,
     RecipeSerializer,
-    RecipeCreateSerializer
+    RecipeCreateSerializer,
+    TagSerializer
 )
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
@@ -91,3 +92,13 @@ class RecipeRetrieveUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
 
 #     def get_serializer_class(self):
 #         return self.serializers.get(self.action, self.serializers['default'])
+
+
+class CategoryAPIView(ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class TagAPIView(ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
