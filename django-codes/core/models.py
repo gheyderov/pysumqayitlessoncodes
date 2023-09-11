@@ -20,3 +20,10 @@ class Contact(AbstractModel):
 
     def __str__(self):
         return self.name
+    
+
+class Subscriber(AbstractModel):
+    email = models.EmailField('email', max_length=155, unique=True)
+
+    def __str__(self) -> str:
+        return self.email

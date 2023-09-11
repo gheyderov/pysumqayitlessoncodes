@@ -4,13 +4,15 @@ from stories.api.views import (
     RecipeAPIView,
     RecipeRetrieveUpdateDeleteAPIView,
     CategoryAPIView,
-    TagAPIView
+    TagAPIView,
+    SubscriberAPIView
 )
 from stories.api.routers import router
 
 urlpatterns = [
     path('categories/', CategoryAPIView.as_view(), name='categories'),
     path('tags/', TagAPIView.as_view(), name='tags'),
+    path('subscriber/', SubscriberAPIView.as_view(), name='subscriber'),
     path('recipes/', RecipeAPIView.as_view(), name='recipes'),
     path('recipe/<int:pk>/', RecipeRetrieveUpdateDeleteAPIView.as_view(), name='recipe_update'),
 ]
