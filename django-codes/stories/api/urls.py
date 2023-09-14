@@ -13,7 +13,7 @@ urlpatterns = [
     path('categories/', CategoryAPIView.as_view(), name='categories'),
     path('tags/', TagAPIView.as_view(), name='tags'),
     path('subscriber/', SubscriberAPIView.as_view(), name='subscriber'),
-    path('recipes/', RecipeAPIView.as_view(), name='recipes'),
+    path('recipes/', RecipeAPIView.as_view(), name='recipes-list'),
     path('recipe/<int:pk>/', RecipeRetrieveUpdateDeleteAPIView.as_view(), name='recipe_update'),
 ]
 
