@@ -46,7 +46,7 @@ class RecipeListView(ListView):
     model = Recipe
     context_object_name = 'recipes'
     ordering = ['-created_at']
-    paginate_by = 1
+    paginate_by = 7
     # recipe_list
     # Recipe.objects.all
 

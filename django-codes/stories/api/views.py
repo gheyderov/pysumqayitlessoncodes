@@ -17,6 +17,7 @@ from rest_framework.generics import (
     CreateAPIView
     )
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from django_filters import rest_framework as filters
 
 
 class SubscriberAPIView(CreateAPIView):
@@ -82,6 +83,8 @@ class RecipeAPIView(ListCreateAPIView):
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_fields = ('category',)
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
