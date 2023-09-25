@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'corsheaders',
     'django_filters',
+    'django_celery_beat'
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -221,3 +222,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'g.heyderov@gmail.com'
 EMAIL_HOST_PASSWORD = 'xwpdwuclybslulpj'
 EMAIL_PORT = 587
+
+
+# Celery settings
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"

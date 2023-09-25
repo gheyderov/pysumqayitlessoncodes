@@ -13,8 +13,15 @@ services:
       POSTGRES_DB: 'stories'
     volumes:
       - ./pgdb:/var/lib/postgresql/data
+
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
