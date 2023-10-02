@@ -35,22 +35,22 @@ services:
     ports:
       - 8080:8080
 
-  # celery:
-  #   container_name: celery
-  #   command: celery -A jafarly worker
-  #   build: 
-  #     context: .
-  #     dockerfile: celery.dockerfile
-  #   depends_on: 
-  #     - "postgres"
-  #     - "redis"
-  #   env_file: .env
+  celery:
+    container_name: celery
+    command: celery -A jafarly worker
+    build: 
+      context: .
+      dockerfile: celery.dockerfile
+    depends_on: 
+      - "postgres"
+      - "redis"
+    env_file: .env
 
-  # redis:
-  #   image: redis
-  #   ports: 
-  #     - 6379:6379
-  #   restart: always
+  redis:
+    image: redis
+    ports: 
+      - 6379:6379
+    restart: always
 
 
 networks:
