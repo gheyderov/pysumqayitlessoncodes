@@ -37,7 +37,7 @@ services:
 
   celery:
     container_name: celery
-    command: celery -A jafarly worker
+    command: celery -A food_stories worker
     build: 
       context: .
       dockerfile: celery.dockerfile
