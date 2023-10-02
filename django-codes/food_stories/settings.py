@@ -24,9 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-pk7qk5$nss+-3!ij%^xs=k=av4*@g+cjhj=1azw-(!+#ehxs7^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False if os.environ.get('DEBUG') else True
-
-ALLOWED_HOSTS = ['*']
+DEBUG = int(os.environ.get("DEBUG", default=1))
+PROD = not DEBUG
+SECRET_KEY = os.environ.get("SECRET_KEY", "ggq4x=e3cnwpku^*v43er-=)f7f9ty^vnjwfb@w0p_y)^it9*&")
+ALLOWED_HOSTS = ['*'] # os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -137,11 +138,11 @@ WSGI_APPLICATION = 'food_stories.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DB', 'stories'),
-        'USER': os.environ.get('POSTGRES_USER', 'tech'),
-        'PASSWORD':os.environ.get('POSTGRES_PASSWORD', 12345),
-        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
-        'PORT': os.environ.get('POSTGRES_PORT', 5432)
+        'NAME': os.environ.get('POSTGRES_DB', 'db_name'),
+        'USER': os.environ.get('POSTGRES_USER', 'user_name'),
+        'PORT': os.environ.get('POSTGRES_PORT', 5432),
+        'HOST': os.environ.get('POSTGRES_HOST', '167.99.41.9'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '123')
     }
 }
 
@@ -203,9 +204,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
-]
+if PROD:
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+else:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static")
+    ]
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -227,3 +231,6 @@ EMAIL_PORT = 587
 # Celery settings
 CELERY_BROKER_URL = f"redis://{os.environ.get('REDIS_HOST', 'localhost')}:6379"
 CELERY_RESULT_BACKEND = f"redis://{os.environ.get('REDIS_HOST', 'localhost')}:6379"
+
+
+# CSRF_TRUSTED_ORIGINS=['https://*.mgegrouplawfirm.com', 'https://mgegrouplawfirm.com']
